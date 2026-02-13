@@ -17,7 +17,6 @@ const Product = () => {
       if(item._id === productId){
         setProductData(item)
         setImage(item.image[0])
-        // 3:33:00
         return null;
       }
     })
@@ -26,6 +25,19 @@ const Product = () => {
   useEffect(()=>{
     fetchProductData();
   },[productId, products])
+
+  //
+  const handleAddToCart = () => {
+    if (!size){
+      toast.error("Please select a size");
+      return;
+    }
+
+    addToCart(productData._id, size);
+
+    toast.success("Product added to cart successfully!")
+  };
+  //
 
   return productData ?  (
     <div className='border-t-2 pt-10 border-gray-300 transition-opacity ease-in duration-500 opacity-100'>
@@ -65,7 +77,7 @@ const Product = () => {
               ))}
             </div>
           </div>
-          <button onClick={()=>addToCart(productData._id,size)} className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700 cursor-pointer'>ADD TO CART</button>
+          <button onClick={handleAddToCart} className='bg-black text-white px-8 py-3 text-sm active:bg-gray-700 cursor-pointer'>ADD TO CART</button>
           <hr className='mt-8 sm:w-4/5 text-gray-200' />
           <div className="text-sm text-gray-500 mt-5 flex flex-col gap-1">
             <p>100% Original Product</p>
